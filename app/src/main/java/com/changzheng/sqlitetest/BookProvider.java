@@ -1,6 +1,7 @@
 package com.changzheng.sqlitetest;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -22,7 +23,7 @@ public class BookProvider extends ContentProvider {
     private static final String AUTHORITY = "BookProvider";
 
     private static final int MULTI = 1;
-    private static final int SIGLE = 1;
+    private static final int SIGLE = 2;
 
     //    注册或者添加一个合法的Uri
     static {
@@ -44,7 +45,24 @@ public class BookProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db=mdbHelper.getReadableDatabase();
 //        不能关闭数据库,是游标
-        return db.query(TABLE,projection,selection,selectionArgs,null,null,sortOrder);
+        int code = uriMatcher.match(uri);//返回的是匹配码
+        switch (code){
+            case MULTI:
+                return db.query(TABLE,projection,selection,selectionArgs,null,null,sortOrder);
+            case SIGLE:
+                long id = ContentUris.parseId(uri);//解析uri的后缀,吧后缀的id取出来
+
+                if (!selection.isEmpty()){
+                    selection=selection+" and "+ID+"="+id;
+                }else {
+                    selection=ID+"="+id;
+                }
+                break;
+            default:
+                db.close();
+                throw new IllegalArgumentException("Uri不合法!");
+        }
+        return null;
 
     }
 
