@@ -15,6 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 增加contentProvide,exportedber内容提供者 是否对外提供数据,为了加强安全,在4.0以后出现该属性-->
+        <provider
+            android:authorities="com.changzheng.sqlitetest"
+            android:name=".BookProvider"
+            android:exported="true">
+
+        </provider>
     </application>
 
 </manifest>
