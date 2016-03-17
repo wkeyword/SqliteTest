@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void delete(View v){
-        TextView bookid= (TextView) findViewById(R.id.book_id_tv);
-        String id=bookid.getText().toString().trim();
+        TextView bookid= (TextView) v;
+        String id=bookid.getText().toString();
         DBUtils dbUtils=new DBUtils(context);
         dbUtils.delete(Integer.valueOf(id));
         cursor.requery();

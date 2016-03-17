@@ -71,7 +71,7 @@ public class DBUtils {
         while (cursor.moveToNext()){
             Map<String,Object> map= new HashMap<String ,Object>();
             map.put(ID,cursor.getInt(cursor.getColumnIndex(ID)));
-            map.put(NAME,cursor.getInt(cursor.getColumnIndex(NAME)));
+            map.put(NAME,cursor.getString(cursor.getColumnIndex(NAME)));
             map.put(PRICE,cursor.getInt(cursor.getColumnIndex(PRICE)));
 
             data.add(map);

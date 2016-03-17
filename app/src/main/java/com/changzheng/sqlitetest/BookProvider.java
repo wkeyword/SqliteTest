@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 /**
  * Created by changzheng on 16/3/17.
@@ -52,7 +53,7 @@ public class BookProvider extends ContentProvider {
             case SIGLE:
                 long id = ContentUris.parseId(uri);//解析uri的后缀,吧后缀的id取出来
 
-                if (!selection.isEmpty()){
+                if (TextUtils.isEmpty(selection)){
                     selection=selection+" and "+ID+"="+id;
                 }else {
                     selection=ID+"="+id;
@@ -65,15 +66,38 @@ public class BookProvider extends ContentProvider {
         return null;
 
     }
-
+//取得访问的数据的MIME类型,*/image
     @Override
     public String getType(Uri uri) {
-        return null;
+        String type=null;
+        int code=uriMatcher.match(uri);
+        switch (code){
+            case MULTI:
+                type="vnd.android.cursor.dir\book";//集合
+                break;
+            case SIGLE:
+                type="vnd.android.cursor.item\book";//单行记录
+                break;
+            default:
+                throw new IllegalArgumentException("uri不合法");
+        }
+        return type;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        SQLiteDatabase db=mdbHelper.getWritableDatabase();
+        int code=uriMatcher.match(uri);
+        switch (code){
+            case MULTI:
+                long id = db.insert(TABLE,null,values);
+                Uri newuri=ContentUris.withAppendedId(uri,id);
+                db.close();
+                return newuri;
+            default:
+                db.close();
+                throw new IllegalArgumentException("uri不合法");
+        }
     }
 
     @Override
