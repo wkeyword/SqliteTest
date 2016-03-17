@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context="com.changzheng.sqlitetest.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="书籍添加"
+        android:textSize="22sp"
+        android:layout_gravity="center"
+        android:textColor="#436fff"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Mytitle"
+            android:layout_weight="1"
+            android:text="编号"
+            />
+
+        <TextView
+            style="@style/Mytitle"
+            android:layout_weight="2"
+            android:text="书名"
+            />
+
+        <TextView
+            style="@style/Mytitle"
+            android:layout_weight="1"
+            android:text="价格"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_del_dark"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@android:id/list"
+        android:divider="#435fff"
+        android:dividerHeight="2dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="输入书名"
+            android:layout_weight="2"/>
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="输入价格"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#436fff"
+            android:textColor="#fff"
+            android:text="添加"
+            android:onClick="add"/>
+
+    </LinearLayout>
+</LinearLayout>
